@@ -5,6 +5,16 @@ Inductive bit : Type :=
 (* https://rand.cs.uchicago.edu/vqc/Matrix.html *)
 Definition simon_matrix (n: nat) := nat -> nat -> bit.
 
+Fixpoint special_helper {n: nat} (k: nat) (M: simon_matrix n) : nat :=
+  match (M k k) with
+  | zero => k
+  | one =>
+      match k with
+      | S x => special_helper x M
+      | O => k
+      end
+  end.
+
 (*
 Fixpoint special_helper {n: nat} (k: nat) (M: simon_matrix n) : nat :=
   match (M k k) with
