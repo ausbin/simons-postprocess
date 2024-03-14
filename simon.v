@@ -36,9 +36,6 @@ Fixpoint vecapp {T: Type} (n1 n2: nat) (v1: @vec T n1) (v2: @vec T n2)
   | vec_cons t n1' v1' => vec_cons t (n1' + n2) (vecapp n1' n2 v1' v2)
   end.
 
-Notation "a ++ b" := (vecapp a b)
-                     (at level 60, right associativity).
-
 Fixpoint listtovec {T: Type} (l: list T) : vec (length l) :=
   match l with
   | nil => vec_nil
