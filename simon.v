@@ -1,8 +1,8 @@
 Require Import Datatypes List.
 Import ListNotations.
-Open Scope list_scope. 
+Open Scope list_scope.
 
-(* This definition was provided by Ziteng Yang *)
+(* Thank you to Ziteng Yang for providing this definition *)
 Inductive vec {T: Type} : nat -> Type :=
   | vec_nil: @vec T 0
   | vec_cons (t: T) (n: nat) (l: @vec T n): @vec T (S n).
@@ -29,11 +29,6 @@ Proof.
   - reflexivity.
   - simpl. rewrite IHv'. reflexivity. Qed.
 
-Notation "[ [ a ; b ] ; [ c ; d ] ]" :=
-  (vec_cons (vec_cons a 1 (vec_cons b 0 vec_nil)) 1
-  (vec_cons (vec_cons c 1 (vec_cons d 0 vec_nil)) 0
-   vec_nil)).
-
 Fixpoint vecapp {T: Type} (n1 n2: nat) (v1: @vec T n1) (v2: @vec T n2)
                 : @vec T (n1+n2) :=
   match v1 with
@@ -53,4 +48,11 @@ Fixpoint listtovec {T: Type} (l: list T) : vec (length l) :=
 Notation "@ l" := (listtovec l) (at level 40).
 
 Check @[1; 2; 3].
-Check @[@[2; 4; 6]; @[1; 2; 3]].
+Check @[@[2; 4; 6];
+        @[1; 2; 3]].
+Fail Check @[@[2; 6];
+           @[1; 2; 3]].
+Fail Check @[@[2; 4; 6];
+           @[1; false; 3]].
+Fail Check @[@[2; 4; 6];
+           @[true; false; true]].
