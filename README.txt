@@ -1,4 +1,5 @@
-I am working on converting the proof below into Coq.
+I am working on converting the proof below into Coq. The proof is about
+how to post-process the output of the quantum kernel in Simon's algorithm.
 This approach is heavily inspired by a post by Tristan Nemoz[1].
 
 [1]: https://quantumcomputing.stackexchange.com/a/29407/13156)
