@@ -183,6 +183,8 @@ Example bmat_is_ref_ex3 :
                   ![true ; false; true]])) = false.
 Proof. reflexivity. Qed.
 
+(* Condition #5 of reduced row echelon form according to Lay, Lay, & McDonald.
+   (Condition #4 is trivially met because this is a matrix of 1s and 0s) *)
 Definition leading_entries_below_f {m n : nat} (mat: bmat m n): bool :=
   leading_entries_above_f (vecreverse mat).
 
