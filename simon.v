@@ -281,4 +281,4 @@ Definition only_off_diag {m n: nat} (mat: bmat m n) (special_idx: nat) :=
   only_off_diag_helper mat special_idx 0.
 
 Lemma simon_after_special : forall m: nat, forall mat: simonmat m, forall i: nat, let c := (bmat_special_col_idx mat) in i >= c -> eq_true (only_off_diag mat c).
-Proof. Admitted.
+Proof. simpl. intros. Admitted.
