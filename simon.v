@@ -243,3 +243,42 @@ Example simon_in_std_ex4 :
                    ![false; true ; true ]])) = true.
 Proof. reflexivity. Qed.
 
+Fixpoint bmat_special_col_idx_helper {m n: nat} (mat: bmat m n) (col_idx: nat) :=
+  match mat with
+  | vec_nil => S m
+  | vec_cons row mat' =>
+      if bvec_proj row col_idx
+      then bmat_special_col_idx_helper mat' (S col_idx)
+      else col_idx
+  end.
+
+Definition bmat_special_col_idx {m n: nat} (mat: bmat m n) :=
+  bmat_special_col_idx_helper mat 0.
+
+Fixpoint bvec_t_at_idx {n: nat} (v: bvec n) (idx: nat) :=
+  match v with
+  | vec_nil => true
+  | vec_cons t v' =>
+      match idx with
+      (* Trick: n will never get decremented enough *)
+      | 0 => if t then bvec_t_at_idx v' n else false
+      | _ => if t then false else bvec_t_at_idx v' (pred idx)
+      end
+  end.
+
+Fixpoint only_off_diag_helper {m n: nat} (mat: bmat m n) (special_idx: nat) (col_idx: nat) :=
+  match mat with
+  | vec_nil => true
+  | vec_cons row mat' =>
+    if special_idx <=? col_idx
+    then if bvec_t_at_idx row (S col_idx)
+         then only_off_diag_helper mat' special_idx (S col_idx)
+         else false
+    else only_off_diag_helper mat' special_idx (S col_idx)
+  end.
+
+Definition only_off_diag {m n: nat} (mat: bmat m n) (special_idx: nat) :=
+  only_off_diag_helper mat special_idx 0.
+
+Lemma simon_after_special : forall m: nat, forall mat: simonmat m, forall i: nat, let c := (bmat_special_col_idx mat) in i >= c -> eq_true (only_off_diag mat c).
+Proof. Admitted.
